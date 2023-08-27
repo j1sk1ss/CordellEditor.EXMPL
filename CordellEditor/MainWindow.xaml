@@ -38,11 +38,11 @@
                       Margin="100,210,0,0"
                       x:Name="ObjectType"
                       SelectionChanged="CreatingTypeChanged">
-                <ComboBoxItem>Шар</ComboBoxItem>
-                <ComboBoxItem>Куб</ComboBoxItem>
-                <ComboBoxItem>Линия</ComboBoxItem>
-                <ComboBoxItem>Полигон</ComboBoxItem>
-                <ComboBoxItem>Свет</ComboBoxItem>
+                <ComboBoxItem>Sphere</ComboBoxItem>
+                <ComboBoxItem>Cube</ComboBoxItem>
+                <ComboBoxItem>Line</ComboBoxItem>
+                <ComboBoxItem>Polygon</ComboBoxItem>
+                <ComboBoxItem>Light</ComboBoxItem>
             </ComboBox>
             
             <Button Height="25"

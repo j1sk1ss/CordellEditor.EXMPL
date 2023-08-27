@@ -32,32 +32,32 @@ public static class InterfaceScripts {
     }
     
     public static readonly Dictionary<string, List<IElement>> InterfaceValues = new() {
-        {"Шар", new List<IElement> {
+        {"Sphere", new List<IElement> {
             new NameValueElement(),
             new VectorValueElement(),
             new ScalarValueElement(),
             new ColorValueElement()
         }},
-        {"Куб", new List<IElement> {
+        {"Cube", new List<IElement> {
             new NameValueElement(),
             new VectorValueElement(),
             new VectorValueElement(),
             new ColorValueElement()
         }},
-        {"Линия", new List<IElement> {
+        {"Line", new List<IElement> {
             new NameValueElement(),
             new VectorValueElement(),
             new VectorValueElement(),
             new ColorValueElement()
         }},
-        {"Полигон", new List<IElement> {
+        {"Polygon", new List<IElement> {
             new NameValueElement(),
             new VectorValueElement(),
             new VectorValueElement(),
             new VectorValueElement(),
             new ColorValueElement()
         }},
-        {"Свет", new List<IElement> {
+        {"Light", new List<IElement> {
             new NameValueElement(),
             new VectorValueElement(),
             new ScalarValueElement()

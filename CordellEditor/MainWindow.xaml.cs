@@ -73,7 +73,7 @@ namespace CordellEditor {
             var values = Values.Children.Cast<Canvas>().ToList();
 
             switch (ObjectType.Text) {
-                case "Шар":
+                case "Sphere":
                     Scene.CreateObject(new Sphere(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         new Vector3(InterfaceScripts.GetScalarFromValues(values[2])),
@@ -81,7 +81,7 @@ namespace CordellEditor {
                         InterfaceScripts.GetNameFromValues(values[0])
                         ));
                     break;
-                case "Куб":
+                case "Cube":
                     Scene.CreateObject(new Cube(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         InterfaceScripts.GetVectorFromValues(values[2]),
@@ -89,7 +89,7 @@ namespace CordellEditor {
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;
-                case "Линия":
+                case "Line":
                     Scene.CreateObject(new Line(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         InterfaceScripts.GetVectorFromValues(values[2]),
@@ -98,7 +98,7 @@ namespace CordellEditor {
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;
-                case "Полигон":
+                case "Polygon":
                     Scene.CreateObject(new Polygon(
                         new [] {
                             InterfaceScripts.GetVectorFromValues(values[1]),
@@ -109,7 +109,7 @@ namespace CordellEditor {
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;
-                case "Свет":
+                case "Light":
                     Scene.CreateObject(new Light(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         InterfaceScripts.GetScalarFromValues(values[2]),
@@ -176,7 +176,7 @@ namespace CordellEditor {
         
         private void SetPosition(object sender, RoutedEventArgs e) {
             if (_movingTimer.IsEnabled) {
-                MessageBox.Show("Дождитесь конца передвижения!");
+                MessageBox.Show("Wait for transformation end!");
                 return;
             }
             

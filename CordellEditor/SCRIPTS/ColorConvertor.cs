@@ -25,21 +25,21 @@ public static class ColorConvertor {
     };
     
     public static readonly Dictionary<string, ConsoleColor> NamedColors = new() {
-        { "Чёрный" , ConsoleColor.Black},
-        { "Синий" , ConsoleColor.Blue},
-        { "Циан" , ConsoleColor.Cyan},
-        { "Серый" , ConsoleColor.Gray},
-        { "Зелёный" , ConsoleColor.Green},
-        { "Пурпурный" , ConsoleColor.Magenta},
-        { "Красный" , ConsoleColor.Red},
-        { "Белый" , ConsoleColor.White},
-        { "Жёлтый" , ConsoleColor.Yellow},
-        { "Тёмно-синий" , ConsoleColor.DarkBlue},
-        { "Тёмно-циановый" , ConsoleColor.DarkCyan},
-        { "Тёмно-серый" , ConsoleColor.DarkGray},
-        { "Тёмно-зелёный" , ConsoleColor.DarkGreen},
-        { "Тёмно-пурпурный" , ConsoleColor.DarkMagenta},
-        { "Тёмно-красный" , ConsoleColor.DarkRed},
-        { "Тёмно-жёлтый" , ConsoleColor.DarkYellow}
+        { "Black", ConsoleColor.Black },
+        { "Blue", ConsoleColor.Blue },
+        { "Cyan", ConsoleColor.Cyan },
+        { "Gray", ConsoleColor.Gray },
+        { "Green", ConsoleColor.Green },
+        { "Magenta", ConsoleColor.Magenta },
+        { "Red", ConsoleColor.Red },
+        { "White", ConsoleColor.White },
+        { "Yellow", ConsoleColor.Yellow },
+        { "Dark Blue", ConsoleColor.DarkBlue },
+        { "Dark Cyan", ConsoleColor.DarkCyan },
+        { "Dark Gray", ConsoleColor.DarkGray },
+        { "Dark Green", ConsoleColor.DarkGreen },
+        { "Dark Magenta", ConsoleColor.DarkMagenta },
+        { "Dark Red", ConsoleColor.DarkRed },
+        { "Dark Yellow", ConsoleColor.DarkYellow }
     };
 }

@@ -20,52 +20,52 @@ public class ColorValueElement : IElement {
                     SelectedIndex = 0,
                     Items = {
                         new ComboBoxItem {
-                            Content = "Чёрный"
+                            Content = "Black"
                         },
                         new ComboBoxItem {
-                            Content = "Синий"
+                            Content = "Blue"
                         },
                         new ComboBoxItem {
-                            Content = "Циан"
+                            Content = "Cyan"
                         },
                         new ComboBoxItem {
-                            Content = "Серый"
+                            Content = "Gray"
                         },
                         new ComboBoxItem {
-                            Content = "Зелёный"
+                            Content = "Green"
                         },
                         new ComboBoxItem {
-                            Content = "Пурпурный"
+                            Content = "Magenta"
                         },
                         new ComboBoxItem {
-                            Content = "Красный"
+                            Content = "Red"
                         },
                         new ComboBoxItem {
-                            Content = "Белый"
+                            Content = "White"
                         },
                         new ComboBoxItem {
-                            Content = "Жёлтый"
+                            Content = "Yellow"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-синий"
+                            Content = "Dark Blue"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-циановый"
+                            Content = "Dark Cyan"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-серый"
+                            Content = "Dark Gray"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-зелёный"
+                            Content = "Dark Green"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-пурпурный"
+                            Content = "Dark Magenta"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-красный"
+                            Content = "Dark Red"
                         },
                         new ComboBoxItem {
-                            Content = "Тёмно-жёлтый"
+                            Content = "Dark Yellow"
                         }
                     }
                 }

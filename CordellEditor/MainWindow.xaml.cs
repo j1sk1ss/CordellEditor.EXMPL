@@ -77,7 +77,8 @@ namespace CordellEditor {
                     Scene.CreateObject(new Sphere(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         new Vector3(InterfaceScripts.GetScalarFromValues(values[2])),
-                        new Material(InterfaceScripts.GetColorFromValues(values[3])),
+                        new Material(InterfaceScripts.GetColorFromValues(values[3]),
+                            InterfaceScripts.GetReflectionFromValues(values[3])),
                         InterfaceScripts.GetNameFromValues(values[0])
                         ));
                     break;
@@ -85,7 +86,8 @@ namespace CordellEditor {
                     Scene.CreateObject(new Cube(
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         InterfaceScripts.GetVectorFromValues(values[2]),
-                        new Material(InterfaceScripts.GetColorFromValues(values[3])),
+                        new Material(InterfaceScripts.GetColorFromValues(values[3]),
+                            InterfaceScripts.GetReflectionFromValues(values[3])),
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;
@@ -94,7 +96,8 @@ namespace CordellEditor {
                         InterfaceScripts.GetVectorFromValues(values[1]),
                         InterfaceScripts.GetVectorFromValues(values[2]),
                         InterfaceScripts.GetScalarFromValues(values[3]),
-                        new Material(InterfaceScripts.GetColorFromValues(values[4])),
+                        new Material(InterfaceScripts.GetColorFromValues(values[4]),
+                            InterfaceScripts.GetReflectionFromValues(values[4])),
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;
@@ -105,7 +108,8 @@ namespace CordellEditor {
                             InterfaceScripts.GetVectorFromValues(values[2]),
                             InterfaceScripts.GetVectorFromValues(values[3])
                         },
-                        new Material(InterfaceScripts.GetColorFromValues(values[4])),
+                        new Material(InterfaceScripts.GetColorFromValues(values[4]),
+                            InterfaceScripts.GetReflectionFromValues(values[4])),
                         InterfaceScripts.GetNameFromValues(values[0])
                     ));
                     break;

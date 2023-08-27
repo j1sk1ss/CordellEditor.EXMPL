@@ -23,6 +23,10 @@ public static class InterfaceScripts {
             .ToString()!];
     }
 
+    public static bool GetReflectionFromValues(Canvas canvas) {
+        return ((CheckBox)canvas.Children[2]).IsChecked!.Value;
+    }
+    
     public static string GetNameFromValues(Canvas canvas) {
         return ((TextBox)canvas.Children[1]).Text;
     }

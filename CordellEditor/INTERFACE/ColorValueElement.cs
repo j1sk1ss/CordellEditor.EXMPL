@@ -68,6 +68,10 @@ public class ColorValueElement : IElement {
                             Content = "Dark Yellow"
                         }
                     }
+                },
+                new CheckBox {
+                    Margin = new Thickness(90, 30, 0, 0),
+                    Content = "Refl."
                 }
             }
         };

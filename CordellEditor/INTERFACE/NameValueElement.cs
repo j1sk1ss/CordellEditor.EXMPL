@@ -24,4 +24,7 @@ public class NameValueElement : IElement {
 
         return body;
     }
+    
+    public static string GetNameFromValues(Canvas canvas) =>
+        ((TextBox)canvas.Children[1]).Text;
 }

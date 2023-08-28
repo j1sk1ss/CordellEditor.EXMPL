@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+
 using CordellEditor.INTERFACE;
 using CordellEditor.SCRIPTS;
 
@@ -44,9 +47,9 @@ namespace CordellEditor {
         private void Visualisation(object? sender, EventArgs e) {
             var data = Scene.GetView();
             var bitmap = new Bitmap(200, 113);
-                
-            for (var i = 0; i < data.Item1.GetLength(1); i++)
-                for (var j = 0; j < data.Item1.GetLength(0); j++) {
+
+            Parallel.For(0, data.Item1.GetLength(1), i => {
+                Parallel.For(0, data.Item1.GetLength(0), j => {
                     var color = ColorConvertor.Colors[data.color[j, i]];
                     
                     var red   = Math.Clamp((int)(color.R * data.light[j, i]), 0, 255);
@@ -59,11 +62,12 @@ namespace CordellEditor {
                         blue  = color.B;
                     }
                     
-                    bitmap.SetPixel(i, j, data.Item1[j, i] switch {
+                    lock (bitmap) bitmap.SetPixel(i, j, data.Item1[j, i] switch {
                         ' ' => Color.Black,
                         _ => Color.FromArgb(red, green, blue)
                     });
-                }
+                });
+            });
             
             Main.Source =  Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), nint.Zero,
                 Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -75,50 +79,63 @@ namespace CordellEditor {
             switch (ObjectType.Text) {
                 case "Sphere":
                     Scene.CreateObject(new Sphere(
-                        InterfaceScripts.GetVectorFromValues(values[1]),
-                        new Vector3(InterfaceScripts.GetScalarFromValues(values[2])),
-                        new Material(InterfaceScripts.GetColorFromValues(values[3]),
-                            InterfaceScripts.GetReflectionFromValues(values[3])),
-                        InterfaceScripts.GetNameFromValues(values[0])
+                        VectorValueElement.GetVectorFromValues(values[1]),
+                        new Vector3(ScalarValueElement.GetScalarFromValues(values[2])),
+                        new Material(ColorValueElement.GetColorFromValues(values[3]),
+                            ColorValueElement.GetReflectionFromValues(values[3])),
+                        NameValueElement.GetNameFromValues(values[0])
                         ));
                     break;
                 case "Cube":
                     Scene.CreateObject(new Cube(
-                        InterfaceScripts.GetVectorFromValues(values[1]),
-                        InterfaceScripts.GetVectorFromValues(values[2]),
-                        new Material(InterfaceScripts.GetColorFromValues(values[3]),
-                            InterfaceScripts.GetReflectionFromValues(values[3])),
-                        InterfaceScripts.GetNameFromValues(values[0])
+                        VectorValueElement.GetVectorFromValues(values[1]),
+                        VectorValueElement.GetVectorFromValues(values[2]),
+                        new Material(ColorValueElement.GetColorFromValues(values[3]),
+                            ColorValueElement.GetReflectionFromValues(values[3])),
+                        NameValueElement.GetNameFromValues(values[0])
                     ));
                     break;
                 case "Line":
                     Scene.CreateObject(new Line(
-                        InterfaceScripts.GetVectorFromValues(values[1]),
-                        InterfaceScripts.GetVectorFromValues(values[2]),
-                        InterfaceScripts.GetScalarFromValues(values[3]),
-                        new Material(InterfaceScripts.GetColorFromValues(values[4]),
-                            InterfaceScripts.GetReflectionFromValues(values[4])),
-                        InterfaceScripts.GetNameFromValues(values[0])
+                        VectorValueElement.GetVectorFromValues(values[1]),
+                        VectorValueElement.GetVectorFromValues(values[2]),
+                        ScalarValueElement.GetScalarFromValues(values[3]),
+                        new Material(ColorValueElement.GetColorFromValues(values[4]),
+                            ColorValueElement.GetReflectionFromValues(values[4])),
+                        NameValueElement.GetNameFromValues(values[0])
                     ));
                     break;
                 case "Polygon":
                     Scene.CreateObject(new Polygon(
                         new [] {
-                            InterfaceScripts.GetVectorFromValues(values[1]),
-                            InterfaceScripts.GetVectorFromValues(values[2]),
-                            InterfaceScripts.GetVectorFromValues(values[3])
+                            VectorValueElement.GetVectorFromValues(values[1]),
+                            VectorValueElement.GetVectorFromValues(values[2]),
+                            VectorValueElement.GetVectorFromValues(values[3])
                         },
-                        new Material(InterfaceScripts.GetColorFromValues(values[4]),
-                            InterfaceScripts.GetReflectionFromValues(values[4])),
-                        InterfaceScripts.GetNameFromValues(values[0])
+                        new Material(ColorValueElement.GetColorFromValues(values[4]),
+                            ColorValueElement.GetReflectionFromValues(values[4])),
+                        NameValueElement.GetNameFromValues(values[0])
                     ));
                     break;
                 case "Light":
                     Scene.CreateObject(new Light(
-                        InterfaceScripts.GetVectorFromValues(values[1]),
-                        InterfaceScripts.GetScalarFromValues(values[2]),
-                        InterfaceScripts.GetNameFromValues(values[0])
+                        VectorValueElement.GetVectorFromValues(values[1]),
+                        ScalarValueElement.GetScalarFromValues(values[2]),
+                        NameValueElement.GetNameFromValues(values[0])
                     ));
+                    break;
+                case "Collection":
+                    var objects = (from object? obj in ObjectsMenu.Children where ReferenceEquals(((Button)((Canvas)obj).Children[^1]).Content, "Disel.") 
+                        select ((Label)((Canvas)obj).Children[0]).Content.ToString()!).ToList();
+                    var collectionObjects = Scene.Objects.Where(obj => objects.Contains(obj.GetName())).ToList();
+
+                    foreach (var obj in collectionObjects) 
+                        DeleteObject(new Button {
+                            Name = $"button_{obj.GetName()}"
+                        }, null!);
+                    
+                    Scene.CreateObject(new Collection(new Vector3(0), new Vector3(0), collectionObjects,
+                        Material.DefaultMaterial, NameValueElement.GetNameFromValues(values[0])));
                     break;
             }
 
@@ -149,8 +166,10 @@ namespace CordellEditor {
 
         public void SelectObject(object sender, RoutedEventArgs e) {
             _movingObjectName = ((Button)sender).Name.Split("_")[1];
-            foreach (var obj in ObjectsMenu.Children) 
-                ((Button)((Canvas)obj).Children[^1]).Content = "Select";
+            
+            if (!Keyboard.IsKeyDown(Key.LeftShift) && !Keyboard.IsKeyDown(Key.RightShift))
+                foreach (var obj in ObjectsMenu.Children) 
+                    ((Button)((Canvas)obj).Children[^1]).Content = "Select";
 
             ((Button)sender).Content = "Disel.";
         }
@@ -190,18 +209,19 @@ namespace CordellEditor {
             var rotation = new Vector3(double.Parse(RotateX.Text),
                 double.Parse(RotateY.Text), double.Parse(RotateZ.Text));
 
-            _moveStep = coordinates / new Vector3(Steps);
-            _rotateStep = rotation / new Vector3(Steps);
+            var steps = 10000 - ((int)SpeedSlider.Value);
+            _moveStep = coordinates / new Vector3(steps);
+            _rotateStep = rotation / new Vector3(steps);
             
+            _temp = steps;
             _movingTimer.Start();
         }
 
         private string _movingObjectName = "";
         private Vector3 _moveStep = new (0);
         private Vector3 _rotateStep = new (0);
-        private const int Steps = 100;
         
-        private int _temp = Steps;
+        private int _temp;
         private void Move(object? sender, EventArgs e) {
             _temp--;
             
@@ -209,7 +229,7 @@ namespace CordellEditor {
             Scene.GetObject(_movingObjectName).Rotate(_rotateStep);
 
             if (_temp > 0) return;
-            _temp = Steps;
+            _temp = 100 - (int)SpeedSlider.Value;
             _movingTimer.Stop();
         }
     }

@@ -24,4 +24,7 @@ public class ScalarValueElement : IElement {
 
         return body;
     }
+    
+    public static double GetScalarFromValues(Canvas canvas) =>
+        double.Parse(((TextBox)canvas.Children[1]).Text);
 }

@@ -38,11 +38,12 @@
                       Margin="100,210,0,0"
                       x:Name="ObjectType"
                       SelectionChanged="CreatingTypeChanged">
-                <ComboBoxItem>Sphere</ComboBoxItem>
-                <ComboBoxItem>Cube</ComboBoxItem>
-                <ComboBoxItem>Line</ComboBoxItem>
-                <ComboBoxItem>Polygon</ComboBoxItem>
-                <ComboBoxItem>Light</ComboBoxItem>
+                <ComboBoxItem> Sphere </ComboBoxItem>
+                <ComboBoxItem> Cube </ComboBoxItem>
+                <ComboBoxItem> Line </ComboBoxItem>
+                <ComboBoxItem> Polygon </ComboBoxItem>
+                <ComboBoxItem> Light </ComboBoxItem>
+                <ComboBoxItem> Collection </ComboBoxItem>
             </ComboBox>
             
             <Button Height="25"
@@ -108,17 +109,26 @@
                         Click="SetPosition">
                     Set moving
                 </Button>
+                <Slider Height="20"
+                        Width="120"
+                        Margin="35,130,0,0"
+                        Maximum="99"
+                        Minimum="1"
+                        x:Name="SpeedSlider">
+                </Slider>
+                <Label Margin="30,145,0,0"
+                > Speed </Label>
             </Canvas>
             
             <Button Height="25"
-                    Width="15"
+                    Width="19"
                     Margin="5,240,0,0"
                     Click="ShowCreation">
                 cr
             </Button>
             
             <Button Height="25"
-                    Width="15"
+                    Width="19"
                     Margin="5,270,0,0"
                     Click="ShowEditor">
                 ed

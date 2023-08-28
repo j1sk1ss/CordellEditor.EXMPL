@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Engine3D.EXMPL.OBJECTS;
 
 namespace CordellEditor.INTERFACE;
 
@@ -34,4 +35,8 @@ public class VectorValueElement : IElement {
 
         return body;
     }
+    
+    public static Vector3 GetVectorFromValues(Canvas canvas) =>
+        new (double.Parse(((TextBox)canvas.Children[1]).Text),
+            double.Parse(((TextBox)canvas.Children[2]).Text), double.Parse(((TextBox)canvas.Children[3]).Text));
 }

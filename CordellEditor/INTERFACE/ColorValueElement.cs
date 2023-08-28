@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using CordellEditor.SCRIPTS;
 
 namespace CordellEditor.INTERFACE;
 
@@ -78,4 +80,12 @@ public class ColorValueElement : IElement {
 
         return body;
     }
+    
+    public static ConsoleColor GetColorFromValues(Canvas canvas) =>
+        ColorConvertor.NamedColors[
+            ((ComboBoxItem)((ComboBox)canvas.Children[1]).Items[(((ComboBox)canvas.Children[1]).SelectedIndex)]).Content
+            .ToString()!];
+    
+    public static bool GetReflectionFromValues(Canvas canvas) =>
+        ((CheckBox)canvas.Children[2]).IsChecked!.Value;
 }

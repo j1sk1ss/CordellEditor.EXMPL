@@ -8,6 +8,13 @@
         Height="450" 
         Width="800"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="RESOURSES/ScrollResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Image x:Name="Main"
                Height="450"
@@ -18,7 +25,8 @@
                 HorizontalAlignment="Right"
                 Background="Beige">
             <ScrollViewer Width="200"
-                          Height="200">
+                          Height="180"
+                          Margin="0,20,0,0">
                 <Grid x:Name="ObjectsMenu"
                       VerticalAlignment="Top"
                       Height="50">
@@ -134,5 +142,17 @@
                 ed
             </Button>
         </Canvas>
+        
+        <Menu Height="19"
+              VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New"
+                          Click="NewScene"></MenuItem>
+                <MenuItem Header="Save"
+                          Click="SaveScene"></MenuItem>
+                <MenuItem Header="Load"
+                          Click="LoadScene"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

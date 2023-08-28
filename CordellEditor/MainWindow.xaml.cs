@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,10 @@ using Engine3D.EXMPL._3D_OBJECTS.MATERIALS;
 using Engine3D.EXMPL.ENGINE_OBJECTS;
 using Engine3D.EXMPL.ENGINE_OBJECTS.CAMERA.CHROME_CAMERA;
 using Engine3D.EXMPL.OBJECTS;
+
+using Microsoft.Win32;
+
+using Newtonsoft.Json;
 
 using Color = System.Drawing.Color;
 using Object = Engine3D.EXMPL._3D_OBJECTS.GEOMETRY.Object;
@@ -42,8 +47,8 @@ namespace CordellEditor {
         }
         
         private DispatcherTimer VisualisationTimer { get; }
-        private Space Scene { get; }
-        
+        private Space Scene { get; set; }
+
         private void Visualisation(object? sender, EventArgs e) {
             var data = Scene.GetView();
             var bitmap = new Bitmap(200, 113);
@@ -209,7 +214,7 @@ namespace CordellEditor {
             var rotation = new Vector3(double.Parse(RotateX.Text),
                 double.Parse(RotateY.Text), double.Parse(RotateZ.Text));
 
-            var steps = 10000 - ((int)SpeedSlider.Value);
+            var steps = 100 - (int)SpeedSlider.Value;
             _moveStep = coordinates / new Vector3(steps);
             _rotateStep = rotation / new Vector3(steps);
             
@@ -231,6 +236,39 @@ namespace CordellEditor {
             if (_temp > 0) return;
             _temp = 100 - (int)SpeedSlider.Value;
             _movingTimer.Stop();
+        }
+
+        private void NewScene(object sender, RoutedEventArgs e) {
+            Scene.Objects.Clear();
+            UpdateMenu();
+        }
+
+        private void SaveScene(object sender, RoutedEventArgs e) {
+            try {
+                var saveWindow = new SaveFileDialog {
+                    Filter = "json files (*.txt)|*.json|All files (*.*)|*.*"
+                };
+                
+                if (saveWindow.ShowDialog() != true) return;
+                File.WriteAllText(saveWindow.SafeFileName, JsonConvert.SerializeObject(Scene));
+            }
+            catch (Exception) {
+                MessageBox.Show("Error with saving");
+            }
+        }
+
+        private void LoadScene(object sender, RoutedEventArgs e) {
+            try {
+                var saveWindow = new OpenFileDialog {
+                    Filter = "json files (*.txt)|*.json|All files (*.*)|*.*"
+                };
+                
+                if (saveWindow.ShowDialog() != true) return;
+                Scene = JsonConvert.DeserializeObject<Space>(File.ReadAllText(saveWindow.FileName))!;
+            }
+            catch (Exception) {
+                MessageBox.Show("Error with saving");
+            }
         }
     }
 }

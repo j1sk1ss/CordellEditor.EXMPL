@@ -12,7 +12,7 @@ public class NameValueElement : IElement {
             Margin = new Thickness(10, position * 50, 0, 0),
             Children = {
                 new Label {
-                    Content = $"Name {position}"
+                    Content = $"Name"
                 },
                 new TextBox {
                     Width = 100,

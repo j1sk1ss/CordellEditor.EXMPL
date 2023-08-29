@@ -160,6 +160,9 @@ namespace CordellEditor {
         public void DeleteObject(object sender, RoutedEventArgs e) {
             var name = ((Button)sender).Name.Split("_")[1];
 
+            foreach (var row in _corrRows) 
+                Scene.DeleteObject(row);  
+            
             for (var i = 0; i < ObjectsMenu.Children.Count; i++)
                 if (((Label)((Canvas)ObjectsMenu.Children[i]).Children[0]).Content.ToString() == name) 
                     ObjectsMenu.Children.RemoveAt(i);
@@ -170,22 +173,42 @@ namespace CordellEditor {
         }
 
         public void SelectObject(object sender, RoutedEventArgs e) {
-            _movingObjectName = ((Button)sender).Name.Split("_")[1];
+            _selectedObjectName = ((Button)sender).Name.Split("_")[1];
+                foreach (var row in _corrRows) 
+                    Scene.DeleteObject(row);
+
+            if (ReferenceEquals(((Button)sender).Content, "Disel.")) {
+                ((Button)sender).Content = "Select";
+                return;
+            }
             
             if (!Keyboard.IsKeyDown(Key.LeftShift) && !Keyboard.IsKeyDown(Key.RightShift))
                 foreach (var obj in ObjectsMenu.Children) 
                     ((Button)((Canvas)obj).Children[^1]).Content = "Select";
-
+            
             ((Button)sender).Content = "Disel.";
+            
+            var clickedObject = Scene.GetObject(_selectedObjectName);
+            Scene.CreateObject(new Line(clickedObject.GetPosition(), clickedObject.GetPosition() + new Vector3(2,0,0), .05, new Material(ConsoleColor.Red), _corrRows[0]));
+            Scene.CreateObject(new Line(clickedObject.GetPosition(), clickedObject.GetPosition() + new Vector3(0,-2,0), .05, new Material(ConsoleColor.Green), _corrRows[1]));
+            Scene.CreateObject(new Line(clickedObject.GetPosition(), clickedObject.GetPosition() + new Vector3(0,0,2), .05, new Material(ConsoleColor.Blue), _corrRows[2]));
         }
         
         private void UpdateMenu() {
+            var rowsCount = 0;
+            
             ObjectsMenu.Children.Clear();
-            foreach (var obj in Scene.Objects) 
+            foreach (var obj in Scene.Objects) {
+                if (_corrRows.Contains(obj.GetName())) {
+                    rowsCount++;
+                    continue;
+                }
+                
                 ObjectsMenu.Children.Add(ObjectElement.GetBody(obj.GetName(),
                     ObjectsMenu.Children.Count, this));
-            
-            ObjectsMenu.Height = ObjectsMenu.Children.Count * 50;
+            }
+
+            ObjectsMenu.Height = (ObjectsMenu.Children.Count - rowsCount) * 50;
         }
 
         private void ShowCreation(object sender, RoutedEventArgs e) {
@@ -208,6 +231,9 @@ namespace CordellEditor {
                 return;
             }
             
+            foreach (var row in _corrRows) 
+                Scene.DeleteObject(row);  
+            
             var coordinates = new Vector3(double.Parse(MoveX.Text),
                 double.Parse(MoveY.Text), double.Parse(MoveZ.Text));
             
@@ -222,7 +248,7 @@ namespace CordellEditor {
             _movingTimer.Start();
         }
 
-        private string _movingObjectName = "";
+        private string _selectedObjectName = "";
         private Vector3 _moveStep = new (0);
         private Vector3 _rotateStep = new (0);
         
@@ -230,8 +256,8 @@ namespace CordellEditor {
         private void Move(object? sender, EventArgs e) {
             _temp--;
             
-            Scene.GetObject(_movingObjectName).Move(_moveStep);
-            Scene.GetObject(_movingObjectName).Rotate(_rotateStep);
+            Scene.GetObject(_selectedObjectName).Move(_moveStep);
+            Scene.GetObject(_selectedObjectName).Rotate(_rotateStep);
 
             if (_temp > 0) return;
             _temp = 100 - (int)SpeedSlider.Value;
@@ -270,5 +296,9 @@ namespace CordellEditor {
                 MessageBox.Show("Error with saving");
             }
         }
+
+        private readonly List<string> _corrRows = new() {
+            "corrRow1", "corrRow2", "corrRow3"
+        };
     }
 }

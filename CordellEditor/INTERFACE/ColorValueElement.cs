@@ -14,7 +14,7 @@ public class ColorValueElement : IElement {
             Margin = new Thickness(10, position * 50, 0, 0),
             Children = {
                 new Label {
-                    Content = $"Color {position}"
+                    Content = $"Color"
                 },
                 new ComboBox {
                     Margin = new Thickness(0, 30, 0, 0),

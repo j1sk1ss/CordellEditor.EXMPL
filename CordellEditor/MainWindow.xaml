@@ -18,8 +18,9 @@
     <Grid>
         <Image x:Name="Main"
                Height="450"
-               Width="800"
-               Margin="-200,0,0,0">
+               Width="585"
+               Margin="-200,0,0,0"
+               Stretch="Fill">
         </Image>
         <Canvas Width="200"
                 HorizontalAlignment="Right"
@@ -40,7 +41,6 @@
                   X2="0" Y2="450"
                   Stroke="Black">
             </Line>
-            
             <ComboBox Height="25"
                       Width="90"
                       Margin="100,210,0,0"
@@ -53,14 +53,12 @@
                 <ComboBoxItem> Light </ComboBoxItem>
                 <ComboBoxItem> Collection </ComboBoxItem>
             </ComboBox>
-            
             <Button Height="25"
                     Width="80"
                     Margin="10,210,0,0"
                     Click="CreateObject">
                 Create
             </Button>
-            
             <ScrollViewer Height="200"
                           Width="200"
                           Margin="0,240,0,0"
@@ -72,7 +70,6 @@
                       Margin="20,0,0,0">
                 </Grid>
             </ScrollViewer>
-            
             <Canvas Height="200"
                     Width="200"
                     Margin="0,240,0,0"
@@ -94,7 +91,6 @@
                          x:Name="MoveZ"> 0
                 </TextBox>
                 <Label Margin="30,20,0,0"> Moving </Label>
-                
                 <TextBox Height="25"
                          Width="25"
                          Margin="35,50,0,0"
@@ -127,14 +123,12 @@
                 <Label Margin="30,145,0,0"
                 > Speed </Label>
             </Canvas>
-            
             <Button Height="25"
                     Width="19"
                     Margin="5,240,0,0"
                     Click="ShowCreation">
                 cr
             </Button>
-            
             <Button Height="25"
                     Width="19"
                     Margin="5,270,0,0"
@@ -142,7 +136,6 @@
                 ed
             </Button>
         </Canvas>
-        
         <Menu Height="19"
               VerticalAlignment="Top">
             <MenuItem Header="File">

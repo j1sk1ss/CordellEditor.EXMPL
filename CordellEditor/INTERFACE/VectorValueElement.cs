@@ -5,6 +5,12 @@ using Engine3D.EXMPL.OBJECTS;
 namespace CordellEditor.INTERFACE;
 
 public class VectorValueElement : IElement {
+    public VectorValueElement(string @default) {
+        Default = @default;
+    }
+    
+    private string Default { get; }
+    
     public Canvas GetBody(int position) {
         var body = new Canvas {
             Height = 50,
@@ -13,7 +19,7 @@ public class VectorValueElement : IElement {
             Margin = new Thickness(10, position * 50, 0, 0),
             Children = {
                 new Label {
-                    Content = $"Vector {position}"
+                    Content = $"{Default}"
                 },
                 new TextBox {
                     Width = 30,

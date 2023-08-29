@@ -4,6 +4,12 @@ using System.Windows.Controls;
 namespace CordellEditor.INTERFACE;
 
 public class ScalarValueElement : IElement {
+    public ScalarValueElement(string @default) {
+        Default = @default;
+    }
+    
+    private string Default { get; }
+    
     public Canvas GetBody(int position) {
         var body = new Canvas {
             Height = 50,
@@ -12,7 +18,7 @@ public class ScalarValueElement : IElement {
             Margin = new Thickness(10, position * 50, 0, 0),
             Children = {
                 new Label {
-                    Content = $"Value {position}"
+                    Content = $"{Default}"
                 },
                 new TextBox {
                     Width = 30,
